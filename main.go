@@ -76,7 +76,6 @@ func run(filename, templateFilename string, out io.Writer, skipPreview bool) err
 		return err
 	}
 	outName := temp.Name() + ".html"
-	fmt.Fprintln(out, outName)
 
 	if err := saveHTML(outName, htmlData); err != nil {
 		return err
