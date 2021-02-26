@@ -1,5 +1,5 @@
 // Copyright © 2020 Ricardo Gerardi. All rights reserved.
-// Copyright © 2020 Yoshiki Shibata. All rights reserved.
+// Copyright © 2020, 2021 Yoshiki Shibata. All rights reserved.
 
 package main
 
@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"os"
 	"time"
 
@@ -58,7 +57,7 @@ func main() {
 
 func run(filename, templateFilename string, out io.Writer, skipPreview bool) error {
 	// Read all the data from the input file and check for error
-	input, err := ioutil.ReadFile(filename)
+	input, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
@@ -68,7 +67,7 @@ func run(filename, templateFilename string, out io.Writer, skipPreview bool) err
 	}
 
 	// Create temporary file and check for errors
-	temp, err := ioutil.TempFile("", "mdp")
+	temp, err := os.CreateTemp("", "mdp")
 	if err != nil {
 		return err
 	}
@@ -127,7 +126,7 @@ func parseContent(input []byte, templateFilename string) ([]byte, error) {
 
 func saveHTML(outFname string, data []byte) error {
 	// Write the bytes to the file
-	return ioutil.WriteFile(outFname, data, 0644)
+	return os.WriteFile(outFname, data, 0644)
 }
 
 func preview(htmlFilename string) error {
